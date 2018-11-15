@@ -33,5 +33,9 @@
 	<tr><td>minTerm</td><td>输出中文词元拼音的最小长度，大于此长度的中文转拼音输出，否则不输出</td><td>2</td></tr>
 	<tr><td>mixShort</td><td>此值大于0时，输出混合拼音，如果输出格式中有简拼，则中文长度最小为3此值有效，否则长度为2有效</td><td>true</td></tr>	
 <table>
+## PinyinNGramTokenFilterFactory参数配置说明
+<table>
+	<tr><th>配置项名称</th><th>功能</th><th>默认值</th></tr>
+<table>
 # 版权
        Apache License Version 2.0
