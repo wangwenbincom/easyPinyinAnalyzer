@@ -15,20 +15,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(com.carrotsearch.randomizedtesting.RandomizedRunner.class)
-public class PinyinTransformTokenFilterFactoryTest {
+public class PinyinNGramTokenFilterFactoryTest {
 
-	private PinyinTransformTokenFilter filter;
+	private PinyinNGramTokenFilter filter;
 
 	@Before
 	public void before() throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("outputFormat", "both");
-		params.put("outOriginal", "false");
-		params.put("mixShort", "3");
+		params.put("minGram", "1");
+		params.put("maxGram", "20");
+		params.put("outputDirection", "front");
 
 		MockTokenizer tokenizer = new MockTokenizer();
-		tokenizer.setReader(new StringReader("科华万象 hello"));
-		this.filter = (PinyinTransformTokenFilter) new PinyinTransformTokenFilterFactory(params).create(tokenizer);
+		tokenizer.setReader(new StringReader("zhongguoren shixi xuexi"));
+		this.filter = (PinyinNGramTokenFilter) new PinyinNGramTokenFilterFactory(params).create(tokenizer);
 	}
 
 	@Test
@@ -42,10 +42,9 @@ public class PinyinTransformTokenFilterFactoryTest {
 			position += increment;
 			OffsetAttribute offset = this.filter.getAttribute(OffsetAttribute.class);
 			TypeAttribute type = this.filter.getAttribute(TypeAttribute.class);
-			System.out.println(position + "[" + offset.startOffset() + "," + offset.endOffset() + "} (" + type.type()
-					+ ") " + token);
+			System.out.println(position + "[" + offset.startOffset() + "," + offset.endOffset() + "] (" + type.type()
+					+ ")" + token);
 		}
 
 	}
-
 }

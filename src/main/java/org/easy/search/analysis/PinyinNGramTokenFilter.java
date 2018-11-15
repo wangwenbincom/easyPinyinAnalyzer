@@ -17,7 +17,7 @@ public class PinyinNGramTokenFilter extends TokenFilter {
 	public static final int DEFAULT_MIN_GRAM_SIZE = 1;
 
 	/**
-	 * 默认输出方向
+	 * 榛樿杈撳嚭鏂瑰悜
 	 */
 	public static final OutputDirection DEFAULT_OUTPUT_DIRECTION = OutputDirection.BOTH;
 
@@ -55,15 +55,13 @@ public class PinyinNGramTokenFilter extends TokenFilter {
 	 * the given range
 	 * 
 	 * @param input
-	 *            {@link TokenStream} holding the input to be tokenized
-	 * @param side
-	 *            from which to chop off an n-gram
+	 *            {@link TokenStream} holding the input to be tokenized	
 	 * @param minGram
 	 *            the smallest n-gram to generate
 	 * @param maxGram
 	 *            the largest n-gram to generate
 	 * @param direction
-	 *            输出方向
+	 *            杈撳嚭鏂瑰悜
 	 */
 	public PinyinNGramTokenFilter(TokenStream input, int minGram, int maxGram, OutputDirection direction) {
 		super(input);
@@ -176,18 +174,18 @@ public class PinyinNGramTokenFilter extends TokenFilter {
 	}
 
 	/**
-	 * 输出方向
+	 * 杈撳嚭鏂瑰悜
 	 */
 	public static enum OutputDirection {
 
-		/** 向前输出，左到右 */
+		/** 鍚戝墠杈撳嚭锛屽乏鍒板彸 */
 		FRONT {
 			@Override
 			public String getLabel() {
 				return "front";
 			}
 		},
-		/** 向后输出，右到左 */
+		/** 鍚戝悗杈撳嚭锛屽彸鍒板乏 */
 		BACK {
 			@Override
 			public String getLabel() {
@@ -195,7 +193,7 @@ public class PinyinNGramTokenFilter extends TokenFilter {
 			}
 		},
 
-		/** 正反同时输出 */
+		/** 姝ｅ弽鍚屾椂杈撳嚭 */
 		BOTH {
 			@Override
 			public String getLabel() {

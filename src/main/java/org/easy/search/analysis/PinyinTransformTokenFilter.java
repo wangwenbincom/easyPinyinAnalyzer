@@ -24,115 +24,115 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 public class PinyinTransformTokenFilter extends TokenFilter {
 
 	/**
-	 * ÖĞÎÄÔ­ÎÄÊÇ·ñÊä³ö
+	 * ä¸­æ–‡åŸæ–‡æ˜¯å¦è¾“å‡º
 	 */
 	public static final boolean DEFAULT_IS_OUT_ORIGINAL = true;
 
 	/**
-	 * ¼òÆ´¡¢È«Æ´¡¢¼òÆ´È«Æ´ÈıÖÖ¸ñÊ½
+	 * ç®€æ‹¼ã€å…¨æ‹¼ã€ç®€æ‹¼å…¨æ‹¼ä¸‰ç§æ ¼å¼
 	 */
 	public static final OutputFormat DEFAULT_OUTPUT_FORMAT = OutputFormat.BOTH;
 
 	/**
-	 * ÖĞÎÄ´Ê×é×ªÆ´Òô³¤¶È×îĞ¡³¤¶È£¬Ä¬ÈÏ×îĞ¡³¤¶ÈÎª2µÄ×ªÆ´Òô
+	 * ä¸­æ–‡è¯ç»„è½¬æ‹¼éŸ³é•¿åº¦æœ€å°é•¿åº¦ï¼Œé»˜è®¤æœ€å°é•¿åº¦ä¸º2çš„è½¬æ‹¼éŸ³
 	 */
 	public static final int DEFAULT_MIN_TERM_LENGTH = 2;
 
 	/**
-	 * ¼òÆ´È«Æ´»ìºÏÊ±£¬¼òÆ´µÄ³¤¶È,Êä³öÄ£Ê½º¬ÓĞ¼òÆ´Ê±£¬ÖĞÎÄ´Ê×é×îĞ¡³¤¶È×îĞ¡3Ê±Îª»ìºÏÄ£Ê½µÄÓĞĞ§³¤¶È£¬ ·ñÔò×îĞ¡³¤¶ÈÎª2Ê±ÎªÓĞĞ§×ª»»³¤¶È£¬×î´ó²»ÄÜ³¬¹ı10
+	 * ç®€æ‹¼å…¨æ‹¼æ··åˆæ—¶ï¼Œç®€æ‹¼çš„é•¿åº¦,è¾“å‡ºæ¨¡å¼å«æœ‰ç®€æ‹¼æ—¶ï¼Œä¸­æ–‡è¯ç»„æœ€å°é•¿åº¦æœ€å°3æ—¶ä¸ºæ··åˆæ¨¡å¼çš„æœ‰æ•ˆé•¿åº¦ï¼Œ å¦åˆ™æœ€å°é•¿åº¦ä¸º2æ—¶ä¸ºæœ‰æ•ˆè½¬æ¢é•¿åº¦ï¼Œæœ€å¤§ä¸èƒ½è¶…è¿‡10
 	 */
 	public static final int DEFAULT_MIX_SHORT_LENGTH = 0;
 
 	/**
-	 * Ô­´ÊÔªÊä³ö±êÊ¶
+	 * åŸè¯å…ƒè¾“å‡ºæ ‡è¯†
 	 */
 	private boolean isOutOriginalTerm;
 
 	/**
-	 * Êä³ö¸ñÊ½
+	 * è¾“å‡ºæ ¼å¼
 	 */
 	private OutputFormat outputFormat;
 
 	/**
-	 * ¼òÆ´È«Æ´»ìºÏÊ±£¬¼òÆ´³¤¶È
+	 * ç®€æ‹¼å…¨æ‹¼æ··åˆæ—¶ï¼Œç®€æ‹¼é•¿åº¦
 	 */
 	private int mixShortLength;
 
 	/**
-	 * ×ª»»Æ´ÒôµÄ×îĞ¡ÖĞÎÄ´Ê×é³¤¶È
+	 * è½¬æ¢æ‹¼éŸ³çš„æœ€å°ä¸­æ–‡è¯ç»„é•¿åº¦
 	 */
 	private int minTermLength;
 
 	/**
-	 * Æ´Òô×ª½ÓÊä³ö¸ñÊ½
+	 * æ‹¼éŸ³è½¬æ¥è¾“å‡ºæ ¼å¼
 	 */
 	private HanyuPinyinOutputFormat pinyinOutputFormat = new HanyuPinyinOutputFormat();
 
 	/**
-	 * µ±Ç°´¦Àí´ÊÔª£¨¼´Ô­´ÊÔª£¬ÀıÈçÊäÈëµÄ´ÊÔªÎªÖĞ¹ú£©
+	 * å½“å‰å¤„ç†è¯å…ƒï¼ˆå³åŸè¯å…ƒï¼Œä¾‹å¦‚è¾“å…¥çš„è¯å…ƒä¸ºä¸­å›½ï¼‰
 	 */
 	private char[] curTermBuffer;
 
 	/**
-	 * µ±Ç°´¦Àí´ÊÔª³¤¶È
+	 * å½“å‰å¤„ç†è¯å…ƒé•¿åº¦
 	 */
 	private int curTermLength;
 
 	/**
-	 * ´ÊÔª¼ÇÂ¼
+	 * è¯å…ƒè®°å½•
 	 */
 	private final CharTermAttribute termAtt = (CharTermAttribute) addAttribute(CharTermAttribute.class);
 
 	/**
-	 * Î»ÖÃÔöÁ¿ÊôĞÔ
+	 * ä½ç½®å¢é‡å±æ€§
 	 */
 	private final PositionIncrementAttribute posIncrAtt = addAttribute(PositionIncrementAttribute.class);
 
 	/**
-	 * ÀàĞÍÊôĞÔ
+	 * ç±»å‹å±æ€§
 	 */
 	private final TypeAttribute typeAtt = addAttribute(TypeAttribute.class);
 
 	/**
-	 * µ±Ç°ÊäÈëÊÇ·ñÒÑÊä³ö
+	 * å½“å‰è¾“å…¥æ˜¯å¦å·²è¾“å‡º
 	 */
 	private boolean hasCurOut = false;
 
 	/**
-	 * Æ´Òô½á¹û¼¯
+	 * æ‹¼éŸ³ç»“æœé›†
 	 */
 	private Collection<String> terms = new ArrayList<String>();
 
 	/**
-	 * Æ´Òô½á¹û¼¯µü´úÆ÷
+	 * æ‹¼éŸ³ç»“æœé›†è¿­ä»£å™¨
 	 */
 	private Iterator<String> termIte = null;
 
 	/**
-	 * ¹¹ÔìÆ÷¡£Ä¬ÈÏ±£ÁôÔ­ÖĞÎÄ´ÊÔª
+	 * æ„é€ å™¨ã€‚é»˜è®¤ä¿ç•™åŸä¸­æ–‡è¯å…ƒ
 	 * 
 	 * @param input
-	 *            ´ÊÔª
+	 *            è¯å…ƒ
 	 * @param outputFormat
-	 *            Êä³ö¸ñÊ½£ºÈ«Æ´¡¢¼òÆ´¡¢È«Æ´ºÍ¼òÆ´{@link OutputFormat}
+	 *            è¾“å‡ºæ ¼å¼ï¼šå…¨æ‹¼ã€ç®€æ‹¼ã€å…¨æ‹¼å’Œç®€æ‹¼{@link OutputFormat}
 	 * @param minTermLength
-	 *            ÖĞÎÄ´Ê×é×îĞ¡×ª»»³¤¶È
+	 *            ä¸­æ–‡è¯ç»„æœ€å°è½¬æ¢é•¿åº¦
 	 */
 	public PinyinTransformTokenFilter(TokenStream input, String outputFormat, int minTermLength) {
 		this(input, outputFormat, minTermLength, true);
 	}
 
 	/**
-	 * ¹¹ÔìÆ÷
+	 * æ„é€ å™¨
 	 * 
 	 * @param input
-	 *            ´ÊÔª
+	 *            è¯å…ƒ
 	 * @param outputFormat
-	 *            Êä³ö¸ñÊ½£ºÈ«Æ´¡¢¼òÆ´¡¢È«Æ´ºÍ¼òÆ´{@link OutputFormat}
+	 *            è¾“å‡ºæ ¼å¼ï¼šå…¨æ‹¼ã€ç®€æ‹¼ã€å…¨æ‹¼å’Œç®€æ‹¼{@link OutputFormat}
 	 * @param minTermLength
-	 *            ÖĞÎÄ´Ê×é×îĞ¡×ª»»³¤¶È
+	 *            ä¸­æ–‡è¯ç»„æœ€å°è½¬æ¢é•¿åº¦
 	 * @param isOutOriginalTerm
-	 *            Ô­´ÊÔªÊä³ö±êÊ¶
+	 *            åŸè¯å…ƒè¾“å‡ºæ ‡è¯†
 	 */
 	public PinyinTransformTokenFilter(TokenStream input, String outputFormat, int minTermLength,
 			boolean isOutOriginalTerm) {
@@ -141,19 +141,19 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 	}
 
 	/**
-	 * ¹¹ÔìÆ÷
+	 * æ„é€ å™¨
 	 * 
 	 * @param input
-	 *            ´ÊÔª
-	 * @param outFormat
-	 *            Êä³ö¸ñÊ½£ºÈ«Æ´¡¢¼òÆ´¡¢È«Æ´ºÍ¼òÆ´ {@link OutputFormat}
+	 *            è¯å…ƒ
+	 * @param outputFormat
+	 *            è¾“å‡ºæ ¼å¼ï¼šå…¨æ‹¼ã€ç®€æ‹¼ã€å…¨æ‹¼å’Œç®€æ‹¼ {@link OutputFormat}
 	 * @param minTermLength
-	 *            ÖĞÎÄ´Ê×é×îĞ¡×ª»»³¤¶È
+	 *            ä¸­æ–‡è¯ç»„æœ€å°è½¬æ¢é•¿åº¦
 	 * @param isOutOriginalTerm
-	 *            Ô­´ÊÔªÊä³ö±êÊ¶
+	 *            åŸè¯å…ƒè¾“å‡ºæ ‡è¯†
 	 * 
 	 * @param mixShortLength
-	 *            ¼òÆ´ºÍÈ«Æ´»ìºÏÄ£Ê½Ê±£¬¼òÆ´µÄ³¤¶È £¬ÖĞÎÄ³¤¶È´óÓÚµÈÓÚ3£¬ÇÒ´ËÖµÓ¦µ±´óÓÚ1Ğ¡ÓÚÖĞÎÄ³¤¶È-1
+	 *            ç®€æ‹¼å’Œå…¨æ‹¼æ··åˆæ¨¡å¼æ—¶ï¼Œç®€æ‹¼çš„é•¿åº¦ ï¼Œä¸­æ–‡é•¿åº¦å¤§äºç­‰äº3ï¼Œä¸”æ­¤å€¼åº”å½“å¤§äº1å°äºä¸­æ–‡é•¿åº¦-1
 	 */
 	public PinyinTransformTokenFilter(TokenStream input, OutputFormat outputFormat, int minTermLength,
 			boolean isOutOriginalTerm, int mixShortLength) {
@@ -168,14 +168,14 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 		this.pinyinOutputFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
 		this.outputFormat = outputFormat;
 		this.mixShortLength = mixShortLength;
-		addAttribute(OffsetAttribute.class); // Æ«ÒÆÁ¿ÊôĞÔ
+		addAttribute(OffsetAttribute.class); // åç§»é‡å±æ€§
 	}
 
 	/**
-	 * ÖĞÎÄ×Ö·ûÍ³¼Æ
+	 * ä¸­æ–‡å­—ç¬¦ç»Ÿè®¡
 	 * 
-	 * @param str
-	 * @return
+	 * @param str input string
+	 * @return return count result
 	 */
 	public static int countChineseChar(String str) {
 		int count = 0;
@@ -189,10 +189,10 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 	}
 
 	/**
-	 * ÅĞ¶Ï×Ö·ûÊÇ·ñÎªÖĞÎÄ
+	 * åˆ¤æ–­å­—ç¬¦æ˜¯å¦ä¸ºä¸­æ–‡
 	 * 
-	 * @param a
-	 * @return
+	 * @param a chinese char
+	 * @return chinese char return true else false
 	 */
 	public static boolean isChinese(char a) {
 		int v = a;
@@ -200,61 +200,61 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 	}
 
 	/**
-	 * ·Ö´Ê¹ıÂË ¸Ã·½·¨±»ÉÏ²ãÑ­»·µ÷ÓÃ£¬Ö±µ½´¦ÀíÍê³É·µ»Øfalse
+	 * åˆ†è¯è¿‡æ»¤ è¯¥æ–¹æ³•è¢«ä¸Šå±‚å¾ªç¯è°ƒç”¨ï¼Œç›´åˆ°å¤„ç†å®Œæˆè¿”å›false
 	 */
 	public final boolean incrementToken() throws IOException {
 		while (true) {
 
-			// µ±Ç°ÎŞ´¦Àí´ÊÔª£¬Ôò²éÕÒÏÂÒ»´ÊÔª
+			// å½“å‰æ— å¤„ç†è¯å…ƒï¼Œåˆ™æŸ¥æ‰¾ä¸‹ä¸€è¯å…ƒ
 			if (this.curTermBuffer == null) {
 
 				if (!this.input.incrementToken()) {
-					// Ã»ÓĞ´ı´¦Àí´ÊÔª
+					// æ²¡æœ‰å¾…å¤„ç†è¯å…ƒ
 					return false;
 				}
-				// »º´æ´ÊÔª
+				// ç¼“å­˜è¯å…ƒ
 				this.curTermBuffer = this.termAtt.buffer().clone();
 				this.curTermLength = this.termAtt.length();
 			}
-			// Êä³öÔ­´ÊÔª
+			// è¾“å‡ºåŸè¯å…ƒ
 			if ((this.isOutOriginalTerm) && (!this.hasCurOut) && (this.termIte == null)) {
-				// Ô­´ÊÔªÒÑ¾­Êä³ö£¬±êÊ¶ÉèÖÃÎªtrue
+				// åŸè¯å…ƒå·²ç»è¾“å‡ºï¼Œæ ‡è¯†è®¾ç½®ä¸ºtrue
 				this.hasCurOut = true;
-				// Ğ´ÈëÔ­ÊäÈë´ÊÔª
+				// å†™å…¥åŸè¾“å…¥è¯å…ƒ
 				this.termAtt.copyBuffer(this.curTermBuffer, 0, this.curTermLength);
 				this.posIncrAtt.setPositionIncrement(this.posIncrAtt.getPositionIncrement());
-				// ½øÈëÏÂ´ÎÑ­»·
+				// è¿›å…¥ä¸‹æ¬¡å¾ªç¯
 				return true;
 			}
 			String chinese = this.termAtt.toString();
 
 			int chineseCount = countChineseChar(chinese);
 
-			// ÅĞ¶ÏÊÇ·ñ·ûºÏ´¦Àí³¤¶È
+			// åˆ¤æ–­æ˜¯å¦ç¬¦åˆå¤„ç†é•¿åº¦
 			if (chineseCount >= this.minTermLength) {
 
 				try {
 					this.terms.clear();
 
-					// »ñÈ¡Æ´Òô½á¹û
+					// è·å–æ‹¼éŸ³ç»“æœ
 					List<String[]> pinyinList = getPinyinList(chinese);
 
-					// ¼òÆ´¼¯ºÏ
+					// ç®€æ‹¼é›†åˆ
 					Collection<String> shortList = null;
-					// È«Æ´¼¯ºÏ
+					// å…¨æ‹¼é›†åˆ
 					Collection<String> fullList = null;
 
 					switch (outputFormat) {
-					case BOTH:// ¼òÆ´ºÍÈ«Æ´
+					case BOTH:// ç®€æ‹¼å’Œå…¨æ‹¼
 						shortList = getShort(pinyinList);
 						fullList = getFull(pinyinList);
 						this.typeAtt.setType("both_pinyin");
 						break;
-					case SHORT:// ¼òÆ´
+					case SHORT:// ç®€æ‹¼
 						shortList = getShort(pinyinList);
 						this.typeAtt.setType("short_pinyin");
 						break;
-					case FULL:// È«Æ´
+					case FULL:// å…¨æ‹¼
 						fullList = getFull(pinyinList);
 						this.typeAtt.setType("full_pinyin");
 						break;
@@ -271,10 +271,10 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 						this.terms.addAll(fullList);
 					}
 
-					// ÔÚÓĞ¼òÆ´µÄÇé¿öÏÂÖĞÎÄ³¤¶ÈÓ¦×îĞ¡Îª3
+					// åœ¨æœ‰ç®€æ‹¼çš„æƒ…å†µä¸‹ä¸­æ–‡é•¿åº¦åº”æœ€å°ä¸º3
 					if (mixShortLength > 0) {
 						if (shortList == null) {
-							// ÔÚÎŞ¼òÆ´µÄÇé¿öÏÂÖĞÎÄ³¤¶ÈÓ¦×îĞ¡Îª2
+							// åœ¨æ— ç®€æ‹¼çš„æƒ…å†µä¸‹ä¸­æ–‡é•¿åº¦åº”æœ€å°ä¸º2
 							if (fullList != null && chineseCount > 1) {
 								Collection<String> minShortList = getMix(pinyinList, mixShortLength);
 								if (null != minShortList)
@@ -301,7 +301,7 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 
 			}
 			if (this.termIte != null) {
-				// Î´´¦ÀíµÄÆ´Òô½á¹û¼¯
+				// æœªå¤„ç†çš„æ‹¼éŸ³ç»“æœé›†
 				while (this.termIte.hasNext()) {
 					String pinyin = this.termIte.next();
 					this.termAtt.copyBuffer(pinyin.toCharArray(), 0, pinyin.length());
@@ -310,21 +310,21 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 				}
 			}
 
-			// ÇåÀí»º´æ
+			// æ¸…ç†ç¼“å­˜
 			this.curTermBuffer = null;
 			this.termIte = null;
-			// ÖØÖÃÔ­´ÊÔªÊä³ö±êÊ¶
+			// é‡ç½®åŸè¯å…ƒè¾“å‡ºæ ‡è¯†
 			this.hasCurOut = false;
 
 		}
 	}
 
 	/**
-	 * »ñÈ¡Æ´ÒôËõĞ´
+	 * è·å–æ‹¼éŸ³ç¼©å†™
 	 * 
 	 * @param pinyinList
-	 *            Æ´Òô¼¯ºÏ
-	 * @return ×ª»»ºóµÄÎÄ±¾
+	 *            æ‹¼éŸ³é›†åˆ
+	 * @return è½¬æ¢åçš„æ–‡æœ¬
 	 * @throws BadHanyuPinyinOutputFormatCombination
 	 */
 	private Collection<String> getShort(List<String[]> pinyinList) throws BadHanyuPinyinOutputFormatCombination {
@@ -354,15 +354,15 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 		super.reset();
 		this.curTermBuffer = null;
 		this.termIte = null;
-		// ÖØÖÃÔ­´ÊÔªÒÔÊä³ö±êÊ¶
+		// é‡ç½®åŸè¯å…ƒä»¥è¾“å‡ºæ ‡è¯†
 		this.hasCurOut = false;
 	}
 
 	/**
 	 * 
 	 * @param str
-	 *            ×Ö·û´®
-	 * @return ·µ»ØÖĞÎÄ×Ö·ûÆ´Òô£¬·ÇÖĞÎÄºöÂÔ
+	 *            å­—ç¬¦ä¸²
+	 * @return è¿”å›ä¸­æ–‡å­—ç¬¦æ‹¼éŸ³ï¼Œéä¸­æ–‡å¿½ç•¥
 	 * @throws BadHanyuPinyinOutputFormatCombination
 	 */
 	private List<String[]> getPinyinList(String str) throws BadHanyuPinyinOutputFormatCombination {
@@ -377,11 +377,11 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 	}
 
 	/**
-	 * »ñÈ¡È«Æ´
+	 * è·å–å…¨æ‹¼
 	 * 
 	 * @param pinyinList
-	 *            Æ´Òô¼¯ºÏ
-	 * @return ×ª»»ºóµÄÎÄ±¾¼¯ºÏ
+	 *            æ‹¼éŸ³é›†åˆ
+	 * @return è½¬æ¢åçš„æ–‡æœ¬é›†åˆ
 	 * @throws BadHanyuPinyinOutputFormatCombination
 	 */
 	private Collection<String> getFull(List<String[]> pinyinList) throws BadHanyuPinyinOutputFormatCombination {
@@ -410,11 +410,11 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 
 	/**
 	 * 
-	 * * @param pinyinList Æ´Òô¼¯ºÏ
+	 * * @param pinyinList æ‹¼éŸ³é›†åˆ
 	 * 
 	 * @param shortLength
-	 *            ´Ó×ó±ß¿ªÊ¼¼òÆ´µÄ³¤¶È
-	 * @return ×ª»»ºóµÄÎÄ±¾¼¯ºÏ
+	 *            ä»å·¦è¾¹å¼€å§‹ç®€æ‹¼çš„é•¿åº¦
+	 * @return è½¬æ¢åçš„æ–‡æœ¬é›†åˆ
 	 * @throws BadHanyuPinyinOutputFormatCombination
 	 */
 	private Collection<String> getMix(List<String[]> pinyinList, int shortLength)
@@ -423,7 +423,7 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 			return new HashSet<String>();
 		}
 
-		//×î´ó³¤¶ÈÎªÆ´Òô³¤¶È-1£¬×îºóÒ»¸öÊ××ÖÄ¸Ê¼ÖÕÁ´½Ó£¬Òò´Ë×îºóÒ»¸ö½øĞĞÊ××ÖÄ¸Ã»ÓĞÒâÒå
+		//æœ€å¤§é•¿åº¦ä¸ºæ‹¼éŸ³é•¿åº¦-1ï¼Œæœ€åä¸€ä¸ªé¦–å­—æ¯å§‹ç»ˆé“¾æ¥ï¼Œå› æ­¤æœ€åä¸€ä¸ªè¿›è¡Œé¦–å­—æ¯æ²¡æœ‰æ„ä¹‰
 		shortLength = Math.min(shortLength, pinyinList.size() - 1);
 
 		if (shortLength > 10) {
@@ -479,18 +479,18 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 	}
 
 	/**
-	 * Êä³ö¸ñÊ½
+	 * è¾“å‡ºæ ¼å¼
 	 */
 	public static enum OutputFormat {
 
-		/** È«Æ´ */
+		/** å…¨æ‹¼ */
 		FULL {
 			@Override
 			public String getLabel() {
 				return "full";
 			}
 		},
-		/** ¼òÆ´ */
+		/** ç®€æ‹¼ */
 		SHORT {
 			@Override
 			public String getLabel() {
@@ -498,7 +498,7 @@ public class PinyinTransformTokenFilter extends TokenFilter {
 			}
 		},
 
-		/** È«Æ´ºÍ¼òÆ´ */
+		/** å…¨æ‹¼å’Œç®€æ‹¼ */
 		BOTH {
 			@Override
 			public String getLabel() {

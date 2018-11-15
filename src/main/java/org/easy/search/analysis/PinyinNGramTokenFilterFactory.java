@@ -12,7 +12,10 @@ public class PinyinNGramTokenFilterFactory extends TokenFilterFactory {
 	private final int minGramSize;
 	private final OutputDirection outputDirection;
 
-	/** Creates a new EdgeNGramFilterFactory */
+	/**
+	 * 
+	 * @param args init param
+	 */
 	public PinyinNGramTokenFilterFactory(Map<String, String> args) {
 		super(args);
 		minGramSize = getInt(args, "minGram", PinyinNGramTokenFilter.DEFAULT_MIN_GRAM_SIZE);

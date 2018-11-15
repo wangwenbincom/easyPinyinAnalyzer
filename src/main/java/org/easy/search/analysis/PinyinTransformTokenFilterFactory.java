@@ -10,22 +10,22 @@ import org.easy.search.analysis.PinyinTransformTokenFilter.OutputFormat;
 public class PinyinTransformTokenFilterFactory extends TokenFilterFactory {
 
 	/**
-	 * Êä³öÔ­´ÊÔª±êÊ¶
+	 * è¾“å‡ºåŸè¯å…ƒæ ‡è¯†
 	 */
 	private boolean isOutOriginal = PinyinTransformTokenFilter.DEFAULT_IS_OUT_ORIGINAL;
 
 	/**
-	 * ÖĞÎÄ´Ê×é×îĞ¡×ª»»³¤¶È£¬Ä¬ÈÏ´óÓÚ2µÄÖĞÎÄ½øĞĞ×ª»»Æ´Òô
+	 * ä¸­æ–‡è¯ç»„æœ€å°è½¬æ¢é•¿åº¦ï¼Œé»˜è®¤å¤§äº2çš„ä¸­æ–‡è¿›è¡Œè½¬æ¢æ‹¼éŸ³
 	 */
 	private int minTermLength = PinyinTransformTokenFilter.DEFAULT_MIN_TERM_LENGTH;
 
 	/**
-	 * Êä³ö¸ñÊ½£¬Ä¬ÈÏ¼òÆ´ºÍÈ«Æ´È«²¿Êä³ö
+	 * è¾“å‡ºæ ¼å¼ï¼Œé»˜è®¤ç®€æ‹¼å’Œå…¨æ‹¼å…¨éƒ¨è¾“å‡º
 	 */
 	private OutputFormat outputFormat = PinyinTransformTokenFilter.DEFAULT_OUTPUT_FORMAT;
 
 	/**
-	 * »ìºÏÊä³ö£¬´Ó×ó±ß¿ªÊ¼£¬¼òÆ´µÄ³¤¶È,Ä¬ÈÏÎª0£¬²»Êä³ö»ìºÏÆ´Òô
+	 * æ··åˆè¾“å‡ºï¼Œä»å·¦è¾¹å¼€å§‹ï¼Œç®€æ‹¼çš„é•¿åº¦,é»˜è®¤ä¸º0ï¼Œä¸è¾“å‡ºæ··åˆæ‹¼éŸ³
 	 */
 	private int mixShortLength = PinyinTransformTokenFilter.DEFAULT_MIX_SHORT_LENGTH;
 
