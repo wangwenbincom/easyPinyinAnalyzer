@@ -15,14 +15,14 @@
 			<tokenizer class="solr.WhitespaceTokenizerFactory" />			
 			<filter class="solr.LowerCaseFilterFactory"/>
 			<filter class="org.easy.search.analysis.PinyinTransformTokenFilterFactory" minTerm="1"  outputFormat="both" outOriginal="false" mixShort="5" />
-			<filter class="org.liangbl.solr.analysis.PinyinNGramTokenFilterFactory" minGram="1" maxGram="20" outputDirection="both"/>
+		  <filter class="org.easy.search.analysis.PinyinNGramTokenFilterFactory" minGram="1" maxGram="20" outputDirection="both"/>
 		</analyzer>
 		<analyzer type="query">
 		  <charFilter class="solr.HTMLStripCharFilterFactory"/>
 		  <tokenizer class="solr.WhitespaceTokenizerFactory"/> 
 		  <filter class="solr.LowerCaseFilterFactory"/>
 		  <filter class="org.easy.search.analysis.PinyinTransformTokenFilterFactory" minTerm="1"  outputFormat="both" outOriginal="false" mixShort="5" />
-		  <filter class="org.liangbl.solr.analysis.PinyinNGramTokenFilterFactory" minGram="1" maxGram="20" />
+		  <filter class="org.easy.search.analysis.PinyinNGramTokenFilterFactory" minGram="1" maxGram="20" outputDirection="both"/>
 		</analyzer>
 	</fieldType>
 ## PinyinTransformTokenFilterFactory参数配置说明
