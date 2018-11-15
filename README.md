@@ -37,7 +37,7 @@
 ## PinyinNGramTokenFilterFactory参数配置说明
 <table>
 	<tr><th>配置项名称</th><th>功能</th><th>默认值</th></tr>
-	<tr><td>minGram</td><td最小拼音切分长度></td><td>1</td></tr>
+	<tr><td>minGram</td><td>最小拼音切分长度</td><td>1</td></tr>
 	<tr><td>maxGram</td><td>最大拼音切分长度</td><td>10</td></tr>
 	<tr><td>outputDirection</td><td>输出方向，front正向输出（从左到右）、back反向输出（从右向左）、both双向输出</td><td>both</td></tr>
 <table>
