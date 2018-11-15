@@ -26,5 +26,8 @@
 		</analyzer>
 	</fieldType>
 ## PinyinTransformTokenFilterFactory参数配置说明
+<table>
+	<tr><th>配置项名称</th><th>功能</th><th>默认值</th></tr>
+<table>
 # 版权
        Apache License Version 2.0
