@@ -1,2 +1,3 @@
 # easyPinyinAnalyzer
 solr的中文拼音分词过滤器，支持全拼、简拼、简拼和全拼同时输出、简拼全拼混合输出，同时提供了一个基于NGram算法的类似EdgeNGramTokenFilter的过滤器，支持双向过滤。
+
