@@ -13,7 +13,7 @@ import org.apache.lucene.analysis.util.CharacterUtils;
 
 public class PinyinNGramTokenFilter extends TokenFilter {
 
-	public static final int DEFAULT_MAX_GRAM_SIZE = 1;
+	public static final int DEFAULT_MAX_GRAM_SIZE = 10;
 	public static final int DEFAULT_MIN_GRAM_SIZE = 1;
 
 	/**
